@@ -13,22 +13,50 @@ function redactCredentials(str) {
 
 function parseDatabaseConfig() {
   const url = process.env.DATABASE_URL || process.env.MYSQL_URI;
+  const isProdOrServerless = process.env.NODE_ENV === 'production' || Boolean(process.env.VERCEL);
+
   if (url && (url.startsWith('mysql://') || url.startsWith('mysql2://'))) {
     try {
       const parsed = new URL(url);
-      const sslParam = (parsed.searchParams.get('sslaccept') || parsed.searchParams.get('ssl-mode') || parsed.searchParams.get('ssl') || '').toLowerCase();
+      const sslParam = (
+        parsed.searchParams.get('sslaccept') ||
+        parsed.searchParams.get('ssl-mode') ||
+        parsed.searchParams.get('sslmode') ||
+        parsed.searchParams.get('ssl') ||
+        parsed.searchParams.get('tls') ||
+        ''
+      ).toLowerCase();
+      const host = parsed.hostname || '127.0.0.1';
+      const isTiDbCloud = host.endsWith('.tidbcloud.com');
+      const useSsl = isTiDbCloud ||
+        ['strict', 'required', 'require', 'true', '1', 'verify_identity', 'verify_ca'].includes(sslParam) ||
+        sslParam.includes('true');
       return {
-        host: parsed.hostname || '127.0.0.1',
+        host,
         port: Number(parsed.port) || 3306,
         user: decodeURIComponent(parsed.username || 'root'),
         password: decodeURIComponent(parsed.password || ''),
         database: (parsed.pathname || '/servicehub').replace(/^\//, '') || 'servicehub',
-        useSsl: ['strict', 'required', 'true', '1', 'verify_identity', 'verify_ca'].includes(sslParam),
-        url
+        useSsl,
+        url,
+        configured: true
       };
     } catch (_) {
-      throw new Error('DATABASE_URL in backend/.env is not a valid MySQL URL.');
+      throw new Error('DATABASE_URL is not a valid MySQL URL.');
     }
+  }
+
+  if (isProdOrServerless && !process.env.DB_HOST) {
+    return {
+      host: 'unconfigured',
+      port: 3306,
+      user: 'unconfigured',
+      password: '',
+      database: 'servicehub',
+      useSsl: true,
+      url: '',
+      configured: false
+    };
   }
 
   const host = process.env.DB_HOST || '127.0.0.1';
@@ -45,20 +73,25 @@ function parseDatabaseConfig() {
     password,
     database,
     useSsl: false,
-    url: constructedUrl
+    url: constructedUrl,
+    configured: true
   };
 }
 
 const dbConfig = parseDatabaseConfig();
 
-// Ensure process.env.DATABASE_URL is always populated for Prisma Client
-if (!process.env.DATABASE_URL) {
+// Ensure process.env.DATABASE_URL is populated for Prisma Client when configured
+if (!process.env.DATABASE_URL && dbConfig.url) {
   process.env.DATABASE_URL = dbConfig.url;
 }
 
-const prisma = new PrismaClient({
+// Reuse a single PrismaClient across warm serverless invocations and dev reloads
+const prisma = globalThis.__servicehubPrisma || new PrismaClient({
   log: process.env.NODE_ENV === 'development' ? ['warn', 'error'] : ['error']
 });
+if (!globalThis.__servicehubPrisma) {
+  globalThis.__servicehubPrisma = prisma;
+}
 
 let shutdownRegistered = false;
 function registerShutdownHooks() {
@@ -82,10 +115,10 @@ async function ensureDatabaseExists() {
     port: dbConfig.port,
     user: dbConfig.user,
     password: dbConfig.password,
-    connectTimeout: 5000
+    connectTimeout: dbConfig.useSsl ? 10000 : 5000
   };
   if (dbConfig.useSsl) {
-    connOptions.ssl = { rejectUnauthorized: true };
+    connOptions.ssl = { minVersion: 'TLSv1.2', rejectUnauthorized: true };
   }
 
   let connection;
@@ -129,6 +162,13 @@ function formatDatabaseError(error) {
 }
 
 async function checkDatabaseHealth() {
+  if (!dbConfig.configured) {
+    return {
+      connected: false,
+      errorCode: 'DB_NOT_CONFIGURED',
+      reason: 'DATABASE_URL environment variable is not configured.'
+    };
+  }
   try {
     await prisma.$queryRaw`SELECT 1`;
     return { connected: true, host: dbConfig.host, port: dbConfig.port, database: dbConfig.database };

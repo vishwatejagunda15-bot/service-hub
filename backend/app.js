@@ -12,8 +12,9 @@ const { checkDatabaseHealth } = require('./config/database');
 
 const app = express();
 const isProduction = process.env.NODE_ENV === 'production';
+const isServerless = Boolean(process.env.VERCEL);
 app.disable('x-powered-by');
-if (isProduction) {
+if (isProduction || isServerless) {
   app.set('trust proxy', 1);
 }
 
