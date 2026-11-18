@@ -2,7 +2,7 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "version": 2,
   "installCommand": "npm --prefix backend ci",
-  "buildCommand": "npm --prefix backend run db:generate",
+  "buildCommand": "npm --prefix backend run db:generate && npm --prefix backend run db:sync",
   "outputDirectory": "frontend",
   "functions": {
     "api/index.js": {

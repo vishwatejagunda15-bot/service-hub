@@ -31,6 +31,20 @@ function parseDatabaseConfig() {
       const useSsl = isTiDbCloud ||
         ['strict', 'required', 'require', 'true', '1', 'verify_identity', 'verify_ca'].includes(sslParam) ||
         sslParam.includes('true');
+
+      // Normalize TiDB Cloud URL for Prisma (require sslaccept=strict & serverless connection limit)
+      let effectiveUrl = url;
+      if (isTiDbCloud) {
+        if (!parsed.searchParams.has('sslaccept')) {
+          parsed.searchParams.set('sslaccept', 'strict');
+        }
+        if (process.env.VERCEL && !parsed.searchParams.has('connection_limit')) {
+          parsed.searchParams.set('connection_limit', '5');
+        }
+        effectiveUrl = parsed.toString();
+        process.env.DATABASE_URL = effectiveUrl;
+      }
+
       return {
         host,
         port: Number(parsed.port) || 3306,
@@ -38,7 +52,7 @@ function parseDatabaseConfig() {
         password: decodeURIComponent(parsed.password || ''),
         database: (parsed.pathname || '/servicehub').replace(/^\//, '') || 'servicehub',
         useSsl,
-        url,
+        url: effectiveUrl,
         configured: true
       };
     } catch (_) {
