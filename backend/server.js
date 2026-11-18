@@ -1,5 +1,7 @@
 const path = require('path');
-require('dotenv').config({ path: path.resolve(__dirname, '.env') });
+if (!process.env.VERCEL) {
+  require('dotenv').config({ path: path.resolve(__dirname, '.env') });
+}
 const app = require('./app');
 const { connectDatabase } = require('./config/database');
 

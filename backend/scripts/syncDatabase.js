@@ -1,7 +1,9 @@
 const fs = require('fs');
 const path = require('path');
 const { spawnSync } = require('child_process');
-require('dotenv').config({ path: path.resolve(__dirname, '../.env') });
+if (!process.env.VERCEL) {
+  require('dotenv').config({ path: path.resolve(__dirname, '../.env') });
+}
 const {
   prisma,
   ensureDatabaseExists,

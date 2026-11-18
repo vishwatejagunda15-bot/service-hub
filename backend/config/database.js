@@ -1,7 +1,21 @@
 const path = require('path');
-require('dotenv').config({ path: path.resolve(__dirname, '../.env') });
+if (!process.env.VERCEL) {
+  require('dotenv').config({ path: path.resolve(__dirname, '../.env') });
+}
 const { PrismaClient } = require('@prisma/client');
 const mysql = require('mysql2/promise');
+
+function cleanEnvValue(raw) {
+  if (typeof raw !== 'string') return '';
+  let val = raw.trim();
+  if (/^DATABASE_URL\s*=/i.test(val)) {
+    val = val.replace(/^DATABASE_URL\s*=/i, '').trim();
+  }
+  if ((val.startsWith('"') && val.endsWith('"')) || (val.startsWith("'") && val.endsWith("'"))) {
+    val = val.slice(1, -1).trim();
+  }
+  return val;
+}
 
 // Redact credentials from any error message or log output
 function redactCredentials(str) {
@@ -12,7 +26,7 @@ function redactCredentials(str) {
 }
 
 function parseDatabaseConfig() {
-  const url = process.env.DATABASE_URL || process.env.MYSQL_URI;
+  const url = cleanEnvValue(process.env.DATABASE_URL || process.env.MYSQL_URI || '');
   const isProdOrServerless = process.env.NODE_ENV === 'production' || Boolean(process.env.VERCEL);
 
   if (url && (url.startsWith('mysql://') || url.startsWith('mysql2://'))) {
@@ -42,8 +56,8 @@ function parseDatabaseConfig() {
           parsed.searchParams.set('connection_limit', '5');
         }
         effectiveUrl = parsed.toString();
-        process.env.DATABASE_URL = effectiveUrl;
       }
+      process.env.DATABASE_URL = effectiveUrl;
 
       return {
         host,

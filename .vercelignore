@@ -1,0 +1,10 @@
+# Exclude local secrets, dependencies, and backups from Vercel CLI uploads
+.env
+.env.*
+backend/.env
+backend/.env.*
+node_modules/
+**/node_modules/
+_backups/
+.git/
+*.log
