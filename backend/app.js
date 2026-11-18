@@ -111,23 +111,6 @@ async function handleReadinessCheck(req, res) {
 app.get('/api/health', handleReadinessCheck);
 app.get('/api/ready', handleReadinessCheck);
 
-app.get('/api/db-debug', async (req, res) => {
-  const dbHealth = await checkDatabaseHealth();
-  const rawUrl = process.env.DATABASE_URL || '';
-  res.json({
-    connected: dbHealth.connected,
-    errorCode: dbHealth.errorCode || null,
-    reason: dbHealth.reason || null,
-    hasDatabaseUrl: Boolean(rawUrl),
-    urlLength: rawUrl.length,
-    urlStartsWith: rawUrl.slice(0, 10),
-    hostDetected: dbHealth.host || null,
-    portDetected: dbHealth.port || null,
-    nodeEnv: process.env.NODE_ENV || null,
-    isVercel: Boolean(process.env.VERCEL)
-  });
-});
-
 app.get('/api', async (req, res) => {
   const dbHealth = await checkDatabaseHealth();
   res.status(dbHealth.connected ? 200 : 503).json({
