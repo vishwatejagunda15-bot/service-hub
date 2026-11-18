@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#1769e0">
+  <title>Find a service provider | QuickFix</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/services.css">
+  <link rel="stylesheet" href="css/ui-polish.css">
+</head>
+<body>
+  <header class="site-header"><div class="container nav-wrap">
+    <a class="brand" href="index.html" aria-label="QuickFix home"><span class="brand-mark">Q</span><span>quick<span class="brand-blue">fix</span><small>LOCAL HELP, MADE EASY</small></span></a>
+    <nav class="listing-nav" aria-label="Main navigation"><a href="index.html">Home</a><a class="active" href="services.html">Services</a><a href="my-bookings.html">My Bookings</a><a href="index.html#about">About</a><a href="index.html#contact">Contact</a></nav>
+    <div class="listing-account"><span id="customer-greeting"></span><a id="customer-login-link" class="login-link" href="login.html">Log in</a><a id="customer-register-link" class="button button-small" href="register.html">Register</a><button id="customer-logout" type="button" hidden>Log out</button></div>
+  </div></header>
+  <main>
+    <section class="listing-hero"><div class="container"><p class="eyebrow">LOCAL HELP, JUST AROUND THE CORNER</p><h1>Find the right pro<br><span>for your home.</span></h1><p>Browse trusted service providers by service and location.</p></div></section>
+    <section class="listing-content container">
+      <form id="provider-filters" class="filter-panel">
+        <div class="filter-field service-search-field"><label for="service-search">Service or provider</label><input id="service-search" name="query" type="search" placeholder="Try electrician or AC repair"></div>
+        <div class="filter-field"><label for="category-filter">Service category</label><select id="category-filter" name="category"><option value="">All services</option><option>Electrician</option><option>Plumber</option><option>Carpenter</option><option>AC Repair</option><option>Cleaning</option><option>Painting</option></select></div>
+        <div class="filter-field"><label for="location-filter">Location</label><input id="location-filter" name="location" type="search" placeholder="City or neighborhood"></div>
+        <button class="button filter-button" type="submit">Search providers</button>
+      </form>
+      <div id="listing-message" class="listing-message" role="status" aria-live="polite" hidden></div>
+      <div class="results-heading"><div><p class="eyebrow">QUICKFIX LOCAL PROS</p><h2 id="results-title">Available providers</h2></div><span id="results-count" class="results-count"></span></div>
+      <div id="providers-loading" class="loading-state" role="status">Loading providers from ServiceHub…</div>
+      <div id="provider-list" class="provider-grid"></div>
+      <section id="no-providers" class="empty-results" hidden><span class="empty-icon">⌕</span><h2>No providers found</h2><p>Try another service or location to see available local providers.</p><button id="clear-filters" class="button button-outline" type="button">Clear filters</button></section>
+    </section>
+  </main>
+  <footer class="listing-footer"><div class="container"><span>© 2025 QuickFix. Made for better days at home.</span><a href="index.html">Back to home</a></div></footer>
+
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script><script src="js/api.js"></script>
+  <script src="js/services.js"></script>
+</body>
+</html>

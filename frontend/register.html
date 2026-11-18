@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#1769e0">
+  <title>Create your account | QuickFix</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/auth.css">
+  <link rel="stylesheet" href="css/ui-polish.css">
+</head>
+<body class="auth-page" data-auth-page="register">
+  <header class="auth-header"><a class="brand" href="index.html" aria-label="QuickFix home"><span class="brand-mark">Q</span><span>quick<span class="brand-blue">fix</span><small>LOCAL HELP, MADE EASY</small></span></a><a class="back-home" href="index.html">← Back to home</a></header>
+  <main class="auth-layout">
+    <aside class="auth-aside">
+      <div class="aside-content"><span class="aside-icon">✦</span><p class="eyebrow">GOOD HELP IS CLOSE BY</p><h1>A little help<br>goes a <span>long way.</span></h1><p>Join your neighborhood and make finding trusted home help feel easy.</p><div class="aside-note"><span class="aside-check">✓</span>One account, a more cared-for home.</div></div>
+      <span class="aside-decoration decoration-one"></span><span class="aside-decoration decoration-two"></span>
+    </aside>
+    <section class="auth-panel" aria-labelledby="form-title">
+      <div class="auth-form-wrap">
+        <p class="eyebrow">GET STARTED WITH QUICKFIX</p><h2 id="form-title">Create your account</h2><p class="auth-subtitle">A few details and you’re all set.</p>
+        <div class="form-message" id="form-message" role="status" aria-live="polite" hidden></div>
+        <form id="register-form" novalidate>
+          <label for="full-name">Full name</label><input id="full-name" name="fullName" type="text" placeholder="e.g. Alex Morgan" autocomplete="name" required minlength="2" maxlength="80">
+          <label for="email">Email address</label><input id="email" name="email" type="email" placeholder="you@example.com" autocomplete="email" required maxlength="254">
+          <label for="phone">Phone number</label><input id="phone" name="phone" type="tel" placeholder="e.g. +1 555 123 4567" autocomplete="tel" required minlength="7" maxlength="20" pattern="[+0-9() .-]{7,20}">
+          <div class="form-row"><div><label for="password">Password</label><input id="password" name="password" type="password" placeholder="At least 8 characters" autocomplete="new-password" required minlength="8"></div><div><label for="confirm-password">Confirm password</label><input id="confirm-password" name="confirmPassword" type="password" placeholder="Enter it again" autocomplete="new-password" required minlength="8"></div></div>
+          <p class="field-hint">Use at least 8 characters for your password.</p>
+          <button class="button auth-submit" type="submit">Create account <span>→</span></button>
+        </form>
+        <p class="auth-switch">Already have an account? <a href="login.html">Log in</a></p>
+        <p class="storage-note">Your account is protected with a securely hashed password.</p>
+      </div>
+    </section>
+  </main>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script><script src="js/api.js"></script><script src="js/auth.js"></script>
+</body>
+</html>

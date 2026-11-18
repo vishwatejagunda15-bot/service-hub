@@ -1,0 +1,397 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#1769e0">
+  <title>Customer Dashboard | QuickFix ServiceHub</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/ui-polish.css">
+  <link rel="stylesheet" href="css/customer-dashboard.css">
+</head>
+<body class="customer-dashboard-body">
+  <div id="sidebar-backdrop" class="cd-backdrop" hidden></div>
+
+  <div class="cd-shell">
+    <!-- Sidebar Navigation -->
+    <aside id="customer-sidebar" class="cd-sidebar" aria-label="Customer dashboard navigation">
+      <div class="cd-sidebar-brand">
+        <a class="brand brand-light" href="index.html" aria-label="QuickFix home">
+          <span class="brand-mark">Q</span>
+          <span>quick<span class="brand-blue">fix</span><small>CUSTOMER PORTAL</small></span>
+        </a>
+        <button id="sidebar-close" class="cd-sidebar-close" type="button" aria-label="Close navigation">×</button>
+      </div>
+
+      <nav class="cd-sidebar-nav">
+        <p class="cd-nav-label">WORKSPACE</p>
+        <button class="cd-nav-link active" type="button" data-view="overview">
+          <span class="cd-nav-icon" aria-hidden="true">▤</span>
+          <span>Overview</span>
+        </button>
+        <button class="cd-nav-link" type="button" data-view="bookings">
+          <span class="cd-nav-icon" aria-hidden="true">▦</span>
+          <span>My Bookings</span>
+          <span class="cd-nav-pill" id="nav-count-bookings">0</span>
+        </button>
+        <button class="cd-nav-link" type="button" data-view="services">
+          <span class="cd-nav-icon" aria-hidden="true">⌕</span>
+          <span>Find Services</span>
+        </button>
+        <button class="cd-nav-link" type="button" data-view="profile">
+          <span class="cd-nav-icon" aria-hidden="true">◉</span>
+          <span>Edit Profile</span>
+        </button>
+
+        <p class="cd-nav-label cd-nav-label-spaced">QUICK LINKS</p>
+        <a class="cd-nav-link cd-nav-external" href="services.html">
+          <span class="cd-nav-icon" aria-hidden="true">✦</span>
+          <span>Browse All Pros</span>
+        </a>
+        <a class="cd-nav-link cd-nav-external" href="index.html">
+          <span class="cd-nav-icon" aria-hidden="true">⌂</span>
+          <span>Public Home</span>
+        </a>
+      </nav>
+
+      <div class="cd-sidebar-footer">
+        <div class="cd-identity">
+          <span class="cd-avatar" id="sidebar-avatar">C</span>
+          <div class="cd-identity-copy">
+            <strong id="sidebar-customer-name">Customer</strong>
+            <small id="sidebar-customer-email">Verifying session…</small>
+          </div>
+        </div>
+        <button id="customer-logout" class="cd-sidebar-logout" type="button">Log out</button>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <div class="cd-content">
+      <header class="cd-topbar">
+        <div class="cd-topbar-left">
+          <button id="sidebar-toggle" class="cd-sidebar-toggle" type="button" aria-label="Open navigation" aria-expanded="false">
+            <span></span><span></span><span></span>
+          </button>
+          <div>
+            <p class="eyebrow" id="view-eyebrow">CUSTOMER DASHBOARD</p>
+            <h1 id="view-title">Dashboard overview</h1>
+          </div>
+        </div>
+        <div class="cd-topbar-actions">
+          <button id="dashboard-refresh" class="cd-btn-secondary" type="button">↻ Refresh</button>
+          <a class="cd-btn-primary" href="services.html">+ Book a service</a>
+        </div>
+      </header>
+
+      <main class="cd-main">
+        <div id="dashboard-loading" class="loading-state" role="status">Loading your customer dashboard…</div>
+        <div id="dashboard-feedback" class="cd-feedback" role="status" aria-live="polite" hidden></div>
+
+        <!-- VIEW 1: OVERVIEW -->
+        <section id="view-overview" class="cd-view" hidden>
+          <section class="cd-welcome-banner">
+            <div class="cd-welcome-copy">
+              <p class="eyebrow">WELCOME BACK</p>
+              <h2>Hello, <span id="customer-welcome-name">Customer</span></h2>
+              <p>Track your home service bookings, view provider arrival times, and book trusted local professionals.</p>
+              <div class="cd-welcome-actions">
+                <button class="cd-btn-white" type="button" data-jump-view="services">Find a service →</button>
+                <button class="cd-btn-ghost" type="button" data-jump-view="bookings">Manage my bookings</button>
+              </div>
+            </div>
+            <div class="cd-welcome-badge" aria-hidden="true">⌂</div>
+          </section>
+
+          <section class="cd-kpi-grid" aria-label="Booking statistics">
+            <article class="cd-kpi-card cd-kpi-total">
+              <div class="cd-kpi-top">
+                <span class="cd-kpi-label">Total bookings</span>
+                <span class="cd-kpi-icon" aria-hidden="true">▦</span>
+              </div>
+              <strong id="stat-total-bookings">0</strong>
+              <small>All service requests</small>
+            </article>
+            <article class="cd-kpi-card cd-kpi-pending">
+              <div class="cd-kpi-top">
+                <span class="cd-kpi-label">Pending bookings</span>
+                <span class="cd-kpi-icon" aria-hidden="true">◷</span>
+              </div>
+              <strong id="stat-pending-bookings">0</strong>
+              <small>Awaiting provider confirmation</small>
+            </article>
+            <article class="cd-kpi-card cd-kpi-accepted">
+              <div class="cd-kpi-top">
+                <span class="cd-kpi-label">Accepted bookings</span>
+                <span class="cd-kpi-icon" aria-hidden="true">✓</span>
+              </div>
+              <strong id="stat-accepted-bookings">0</strong>
+              <small>Confirmed &amp; scheduled</small>
+            </article>
+            <article class="cd-kpi-card cd-kpi-completed">
+              <div class="cd-kpi-top">
+                <span class="cd-kpi-label">Completed bookings</span>
+                <span class="cd-kpi-icon" aria-hidden="true">★</span>
+              </div>
+              <strong id="stat-completed-bookings">0</strong>
+              <small>Finished home services</small>
+            </article>
+          </section>
+
+          <div class="cd-overview-grid">
+            <!-- Upcoming Bookings -->
+            <article class="cd-panel-card">
+              <div class="cd-panel-header">
+                <div>
+                  <p class="eyebrow">NEXT ON YOUR SCHEDULE</p>
+                  <h3>Upcoming bookings</h3>
+                </div>
+                <span class="cd-panel-meta" id="upcoming-count">0 upcoming</span>
+              </div>
+              <div id="upcoming-bookings-list" class="cd-booking-stack"></div>
+              <div id="upcoming-bookings-empty" class="cd-empty-state" hidden>
+                <span class="cd-empty-icon" aria-hidden="true">◷</span>
+                <h4>No upcoming bookings</h4>
+                <p>Schedule a verified local expert whenever your home needs a hand.</p>
+                <button class="cd-btn-primary" type="button" data-jump-view="services">Find services</button>
+              </div>
+            </article>
+
+            <!-- Customer Profile Snapshot -->
+            <article class="cd-panel-card cd-profile-snapshot">
+              <div class="cd-panel-header">
+                <div>
+                  <p class="eyebrow">YOUR ACCOUNT</p>
+                  <h3>Customer profile</h3>
+                </div>
+                <button class="cd-btn-link" type="button" data-jump-view="profile">Edit →</button>
+              </div>
+              <div class="cd-snapshot-hero">
+                <span class="cd-snapshot-avatar" id="overview-profile-avatar">C</span>
+                <div>
+                  <strong id="overview-profile-name">Customer</strong>
+                  <span class="cd-role-pill">Verified Customer</span>
+                </div>
+              </div>
+              <dl class="cd-profile-dl">
+                <div>
+                  <dt>Email address</dt>
+                  <dd id="overview-profile-email">—</dd>
+                </div>
+                <div>
+                  <dt>Phone number</dt>
+                  <dd id="overview-profile-phone">—</dd>
+                </div>
+                <div>
+                  <dt>Member since</dt>
+                  <dd id="overview-profile-joined">—</dd>
+                </div>
+                <div>
+                  <dt>Customer ID</dt>
+                  <dd id="overview-profile-id">—</dd>
+                </div>
+              </dl>
+            </article>
+          </div>
+
+          <!-- Recent Bookings -->
+          <article class="cd-panel-card">
+            <div class="cd-panel-header">
+              <div>
+                <p class="eyebrow">LATEST ACTIVITY</p>
+                <h3>Recent bookings</h3>
+              </div>
+              <div class="cd-panel-header-right">
+                <span class="cd-panel-meta" id="recent-count">0 total</span>
+                <button class="cd-btn-link" type="button" data-jump-view="bookings">View all bookings →</button>
+              </div>
+            </div>
+            <div id="recent-bookings-list" class="cd-booking-stack"></div>
+            <div id="recent-bookings-empty" class="cd-empty-state" hidden>
+              <span class="cd-empty-icon" aria-hidden="true">▦</span>
+              <h4>No bookings yet</h4>
+              <p>Once you book a service provider, your booking history will appear here.</p>
+              <button class="cd-btn-primary" type="button" data-jump-view="services">Explore services</button>
+            </div>
+          </article>
+        </section>
+
+        <!-- VIEW 2: MY BOOKINGS -->
+        <section id="view-bookings" class="cd-view" hidden>
+          <article class="cd-panel-card">
+            <div class="cd-panel-header cd-panel-header-wrap">
+              <div>
+                <p class="eyebrow">BOOKING MANAGEMENT</p>
+                <h2>My bookings</h2>
+              </div>
+              <form id="booking-filter-form" class="cd-toolbar">
+                <input id="booking-search" type="search" placeholder="Search provider, service, address, or ID…" aria-label="Search bookings">
+                <select id="booking-status-filter" aria-label="Filter bookings by status">
+                  <option value="">All statuses</option>
+                  <option value="Pending">Pending</option>
+                  <option value="Accepted">Accepted</option>
+                  <option value="Rescheduled">Rescheduled</option>
+                  <option value="Completed">Completed</option>
+                  <option value="Rejected">Rejected</option>
+                  <option value="Cancelled">Cancelled</option>
+                </select>
+                <button id="booking-filter-clear" class="cd-btn-secondary" type="button">Reset</button>
+              </form>
+            </div>
+
+            <div class="cd-meta-bar">
+              <span id="bookings-filtered-count">0 bookings</span>
+              <span>Only bookings belonging to your customer account are shown.</span>
+            </div>
+
+            <div id="all-bookings-list" class="cd-booking-stack"></div>
+
+            <div id="all-bookings-empty" class="cd-empty-state" hidden>
+              <span class="cd-empty-icon" aria-hidden="true">▦</span>
+              <h4 id="all-bookings-empty-title">No bookings found</h4>
+              <p id="all-bookings-empty-copy">Try clearing your filters or book a local service provider.</p>
+              <button class="cd-btn-primary" type="button" data-jump-view="services">Find services</button>
+            </div>
+          </article>
+        </section>
+
+        <!-- VIEW 3: FIND SERVICES -->
+        <section id="view-services" class="cd-view" hidden>
+          <article class="cd-panel-card">
+            <div class="cd-panel-header cd-panel-header-wrap">
+              <div>
+                <p class="eyebrow">SERVICE MARKETPLACE</p>
+                <h2>Find local service providers</h2>
+              </div>
+              <span class="cd-panel-meta" id="services-count">0 providers</span>
+            </div>
+
+            <div class="cd-category-pills" id="service-category-pills" role="group" aria-label="Filter by category">
+              <button type="button" class="cd-cat-pill active" data-category="">All services</button>
+              <button type="button" class="cd-cat-pill" data-category="Electrician">Electrician</button>
+              <button type="button" class="cd-cat-pill" data-category="Plumber">Plumber</button>
+              <button type="button" class="cd-cat-pill" data-category="Carpenter">Carpenter</button>
+              <button type="button" class="cd-cat-pill" data-category="AC Repair">AC Repair</button>
+              <button type="button" class="cd-cat-pill" data-category="Cleaning">Cleaning</button>
+              <button type="button" class="cd-cat-pill" data-category="Painting">Painting</button>
+            </div>
+
+            <form id="dashboard-service-filter" class="cd-service-filter-form">
+              <input id="service-search-input" type="search" placeholder="Search provider name or service…" aria-label="Search providers">
+              <input id="service-location-input" type="search" placeholder="Filter by city or location…" aria-label="Filter by location">
+              <button class="cd-btn-primary" type="submit">Search</button>
+              <button id="service-filter-reset" class="cd-btn-secondary" type="button">Reset</button>
+            </form>
+
+            <div id="dashboard-providers-loading" class="loading-state" role="status" hidden>Loading service providers…</div>
+            <div id="dashboard-providers-list" class="cd-provider-grid"></div>
+            <div id="dashboard-providers-empty" class="cd-empty-state" hidden>
+              <span class="cd-empty-icon" aria-hidden="true">⌕</span>
+              <h4>No matching providers found</h4>
+              <p>Try a different category, keyword, or location filter.</p>
+              <button id="service-empty-reset" class="cd-btn-secondary" type="button">Clear filters</button>
+            </div>
+          </article>
+        </section>
+
+        <!-- VIEW 4: EDIT PROFILE -->
+        <section id="view-profile" class="cd-view" hidden>
+          <div class="cd-profile-layout">
+            <article class="cd-panel-card cd-profile-summary-card">
+              <div class="cd-profile-avatar-lg" id="profile-avatar">C</div>
+              <h2 id="profile-display-name">Customer</h2>
+              <p class="cd-profile-email-sub" id="profile-display-email">—</p>
+              <span class="cd-role-pill">Customer Account</span>
+              <div class="cd-profile-meta-list">
+                <div><span>Member since</span><strong id="profile-display-joined">—</strong></div>
+                <div><span>Account ID</span><strong id="profile-display-id">—</strong></div>
+                <div><span>Total bookings</span><strong id="profile-display-bookings">0</strong></div>
+              </div>
+            </article>
+
+            <article class="cd-panel-card">
+              <div class="cd-panel-header">
+                <div>
+                  <p class="eyebrow">ACCOUNT SETTINGS</p>
+                  <h2>Edit profile</h2>
+                </div>
+              </div>
+
+              <div id="profile-form-message" class="cd-feedback" role="status" aria-live="polite" hidden></div>
+
+              <form id="customer-profile-form" class="cd-profile-form" novalidate>
+                <div class="cd-field">
+                  <label for="profile-fullName">Full name</label>
+                  <input id="profile-fullName" name="fullName" type="text" autocomplete="name" required minlength="2" maxlength="80" placeholder="Enter your full name">
+                </div>
+
+                <div class="cd-field">
+                  <label for="profile-email">Email address</label>
+                  <input id="profile-email" name="email" type="email" readonly disabled>
+                  <small class="cd-field-hint">Your registered email address is used for sign-in and cannot be changed here.</small>
+                </div>
+
+                <div class="cd-field">
+                  <label for="profile-phone">Phone number</label>
+                  <input id="profile-phone" name="phone" type="tel" autocomplete="tel" required minlength="7" maxlength="20" pattern="[+0-9() .-]{7,20}" placeholder="e.g. +91 98765 43210">
+                </div>
+
+                <div class="cd-form-actions">
+                  <button id="profile-save-btn" class="cd-btn-primary" type="submit">Save changes</button>
+                </div>
+              </form>
+            </article>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <!-- Booking Details Modal -->
+  <div id="booking-details-modal" class="cd-modal" role="dialog" aria-modal="true" aria-labelledby="details-modal-title" hidden>
+    <div class="cd-modal-card cd-modal-wide">
+      <div class="cd-modal-header">
+        <div>
+          <p class="eyebrow">BOOKING DETAILS</p>
+          <h2 id="details-modal-title">Booking #</h2>
+        </div>
+        <button id="details-modal-close" class="cd-modal-close" type="button" aria-label="Close booking details">×</button>
+      </div>
+      <div class="cd-modal-status-row">
+        <span id="details-modal-status" class="cd-status-badge status-pending">Pending</span>
+        <span id="details-modal-created" class="cd-modal-created"></span>
+      </div>
+      <div id="details-modal-body" class="cd-details-grid"></div>
+      <div class="cd-details-description">
+        <span>Problem description</span>
+        <p id="details-modal-description"></p>
+      </div>
+      <div class="cd-modal-actions">
+        <a id="details-modal-provider-link" class="cd-btn-secondary" href="services.html">View provider profile</a>
+        <button id="details-modal-cancel-booking" class="cd-btn-danger" type="button" hidden>Cancel booking</button>
+        <button id="details-modal-done" class="cd-btn-primary" type="button">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Cancel Booking Confirmation Modal -->
+  <div id="cancel-modal" class="cd-modal" role="dialog" aria-modal="true" aria-labelledby="cancel-modal-title" hidden>
+    <div class="cd-modal-card">
+      <div class="cd-modal-warn-icon" aria-hidden="true">!</div>
+      <h2 id="cancel-modal-title">Cancel this booking?</h2>
+      <p id="cancel-modal-body">Are you sure you want to cancel this service booking? This action cannot be undone.</p>
+      <div class="cd-modal-actions">
+        <button id="cancel-modal-keep" class="cd-btn-secondary" type="button">Keep booking</button>
+        <button id="cancel-modal-confirm" class="cd-btn-danger" type="button">Yes, cancel booking</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/customer-dashboard.js"></script>
+</body>
+</html>

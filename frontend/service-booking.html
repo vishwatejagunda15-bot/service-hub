@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#1769e0">
+  <title>Book a service | QuickFix</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/service-booking.css">
+  <link rel="stylesheet" href="css/ui-polish.css">
+</head>
+<body class="booking-page">
+  <header class="site-header"><div class="container nav-wrap">
+    <a class="brand" href="index.html" aria-label="QuickFix home"><span class="brand-mark">Q</span><span>quick<span class="brand-blue">fix</span><small>LOCAL HELP, MADE EASY</small></span></a>
+    <a class="back-to-list" id="back-to-provider" href="services.html">← Back to providers</a>
+  </div></header>
+  <main class="booking-main container">
+    <section class="booking-heading"><p class="eyebrow">LET’S GET IT SORTED</p><h1>Book a service</h1><p>Tell us a little about the job and your preferred time.</p></section>
+    <div id="booking-loading" class="loading-state" role="status">Loading your account and provider…</div>
+    <div id="booking-provider-error" class="booking-alert error" role="alert" hidden>This provider could not be found. <a href="services.html">Browse available providers</a>.</div>
+    <section id="booking-login-required" class="booking-login-required" hidden><span class="login-required-icon">⌑</span><h2>Log in to continue</h2><p>Bookings are saved to your customer account so you can track and manage them.</p><div><a id="booking-login-link" class="button" href="login.html">Customer log in</a><a id="booking-register-link" class="secondary-link" href="register.html">Create an account</a></div></section>
+    <section id="booking-form-panel" class="booking-card" hidden>
+      <div class="selected-provider"><span class="selected-avatar" id="selected-avatar">Q</span><div><span class="selected-label">BOOKING WITH</span><strong id="selected-provider"></strong><span id="selected-service" class="selected-category"></span></div><a id="view-provider" href="#">View profile</a></div>
+      <div id="booking-message" class="booking-alert" role="status" aria-live="polite" hidden></div>
+      <form id="service-booking-form" novalidate>
+        <div class="booking-section-title"><span>01</span><div><h2>Your contact details</h2><p>How can the provider reach you?</p></div></div>
+        <div class="booking-fields">
+          <div class="form-field"><label for="customer-name">Customer name</label><input id="customer-name" name="customerName" type="text" autocomplete="name" placeholder="Your full name" required minlength="2" maxlength="80"></div>
+          <div class="form-field"><label for="customer-phone">Phone number</label><input id="customer-phone" name="customerPhone" type="tel" autocomplete="tel" placeholder="e.g. +91 98765 43210" required minlength="7" maxlength="20" pattern="[+0-9() .-]{7,20}"></div>
+          <div class="form-field full-width"><label for="customer-address">Service address</label><textarea id="customer-address" name="address" autocomplete="street-address" placeholder="Street, area, city and any helpful directions" rows="3" required minlength="5" maxlength="250"></textarea></div>
+        </div>
+        <div class="booking-section-title section-spaced"><span>02</span><div><h2>Service and schedule</h2><p>Confirm the service and choose a preferred time.</p></div></div>
+        <div class="booking-fields">
+          <div class="form-field"><label for="selected-service-input">Selected service</label><input id="selected-service-input" name="service" type="text" readonly required></div>
+          <div class="form-field"><label for="selected-provider-input">Selected provider</label><input id="selected-provider-input" name="provider" type="text" readonly required></div>
+          <div class="form-field"><label for="booking-date">Preferred booking date</label><input id="booking-date" name="bookingDate" type="date" required></div>
+          <div class="form-field"><label for="booking-time">Preferred booking time</label><input id="booking-time" name="bookingTime" type="time" required></div>
+          <div class="form-field full-width"><label for="problem-description">Problem description</label><textarea id="problem-description" name="description" placeholder="Describe what needs to be done" rows="4" required minlength="5" maxlength="1000"></textarea></div>
+        </div>
+        <div class="booking-footer"><p>Your booking request will be saved to your account.</p><button class="button submit-booking" type="submit">Submit booking request <span>→</span></button></div>
+      </form>
+    </section>
+    <section id="booking-confirmation" class="booking-confirmation" hidden>
+      <span class="confirmation-check">✓</span><p class="eyebrow">REQUEST RECEIVED</p><h1>Thanks, <span id="confirmation-name"></span>!</h1><p class="confirmation-copy">Your booking request was saved. The provider and service details are below.</p>
+      <div class="confirmation-card"><div><span>Booking ID</span><strong id="confirmation-id"></strong></div><div><span>Service</span><strong id="confirmation-service"></strong></div><div><span>Provider</span><strong id="confirmation-provider"></strong></div><div><span>Preferred time</span><strong id="confirmation-time"></strong></div></div>
+      <div class="confirmation-actions"><a class="button" href="my-bookings.html">View my bookings</a><a class="secondary-link" href="services.html">Browse more providers</a></div>
+    </section>
+  </main>
+  <footer class="listing-footer"><div class="container"><span>© 2025 QuickFix. Made for better days at home.</span><a href="index.html">Back to home</a></div></footer>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script><script src="js/api.js"></script>
+  <script src="js/service-booking.js"></script>
+</body>
+</html>

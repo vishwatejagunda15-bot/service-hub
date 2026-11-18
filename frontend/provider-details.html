@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#1769e0">
+  <title>Provider details | QuickFix</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/provider-details.css">
+  <link rel="stylesheet" href="css/ui-polish.css">
+</head>
+<body class="provider-details-page">
+  <header class="site-header"><div class="container nav-wrap">
+    <a class="brand" href="index.html" aria-label="QuickFix home"><span class="brand-mark">Q</span><span>quick<span class="brand-blue">fix</span><small>LOCAL HELP, MADE EASY</small></span></a>
+    <a class="back-to-list" id="back-to-list" href="services.html">← Back to providers</a>
+  </div></header>
+  <main class="provider-details-main container">
+    <div id="provider-not-found" class="provider-not-found" hidden><span>We couldn’t find this provider.</span><a class="button" href="services.html">Browse providers</a></div>
+    <div id="provider-loading" class="loading-state" role="status">Loading provider details…</div>
+    <div id="provider-profile" hidden>
+      <p class="eyebrow">QUICKFIX LOCAL PROVIDER</p>
+      <section class="profile-hero">
+        <div class="profile-identity"><div class="profile-avatar" id="profile-avatar">Q</div><div><span class="category-tag" id="profile-category"></span><h1 id="profile-name"></h1><p class="profile-location"><span aria-hidden="true">⌖</span> <span id="profile-location"></span></p></div></div>
+        <div class="availability-pill"><span class="availability-dot"></span><span id="profile-availability"></span></div>
+      </section>
+      <div id="booking-message" class="listing-message" role="status" aria-live="polite" hidden></div>
+      <div class="details-layout">
+        <section class="profile-content">
+          <article class="details-panel"><p class="eyebrow">ABOUT THE PROVIDER</p><h2>Profile information</h2><p class="provider-about" id="profile-about"></p></article>
+          <article class="details-panel"><p class="eyebrow">AT A GLANCE</p><h2>Service details</h2><div class="profile-facts">
+            <div><span>Service category</span><strong id="fact-category"></strong></div>
+            <div><span>Experience</span><strong id="fact-experience"></strong></div>
+            <div><span>Location</span><strong id="fact-location"></strong></div>
+            <div><span>Availability</span><strong id="fact-availability"></strong></div>
+          </div></article>
+          <article class="details-panel contact-panel"><p class="eyebrow">GET IN TOUCH</p><h2>Contact information</h2><p><span>Phone</span><a id="profile-phone" href="#"></a></p><p><span>Email</span><a id="profile-email" href="#"></a></p></article>
+        </section>
+        <aside class="booking-panel"><p class="eyebrow">SERVICE CHARGES</p><div class="price" id="profile-charges"></div><p class="price-caption">Starting charge</p><p class="booking-copy">Ready to get started? Send this provider a booking request.</p><button id="book-provider" class="button book-provider-button" type="button">Book now <span>→</span></button><p class="booking-footnote">You’ll need a customer account to book.</p></aside>
+      </div>
+    </div>
+  </main>
+  <footer class="listing-footer"><div class="container"><span>© 2025 QuickFix. Made for better days at home.</span><a href="index.html">Back to home</a></div></footer>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script><script src="js/api.js"></script>
+  <script src="js/provider-details.js"></script>
+</body>
+</html>

@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#1769e0">
+  <title>Provider registration | QuickFix</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/auth.css">
+  <link rel="stylesheet" href="css/ui-polish.css">
+</head>
+<body class="auth-page" data-provider-page="register">
+  <header class="auth-header"><a class="brand" href="index.html" aria-label="QuickFix home"><span class="brand-mark">Q</span><span>quick<span class="brand-blue">fix</span><small>LOCAL HELP, MADE EASY</small></span></a><a class="back-home" href="index.html">← Back to home</a></header>
+  <main class="auth-layout provider-register-layout">
+    <aside class="auth-aside">
+      <div class="aside-content"><span class="aside-icon">✦</span><p class="eyebrow">FOR LOCAL PROFESSIONALS</p><h1>Good work<br>deserves to <span>get found.</span></h1><p>Introduce your services to people nearby who need a hand at home.</p><div class="aside-note"><span class="aside-check">✓</span>Build your local service profile.</div></div>
+      <span class="aside-decoration decoration-one"></span><span class="aside-decoration decoration-two"></span>
+    </aside>
+    <section class="auth-panel" aria-labelledby="form-title">
+      <div class="auth-form-wrap">
+        <p class="eyebrow">PROVIDER ACCOUNT</p><h2 id="form-title">Join QuickFix</h2><p class="auth-subtitle">Add your details to create a provider profile.</p>
+        <div class="form-message" id="provider-message" role="status" aria-live="polite" hidden></div>
+        <form id="provider-register-form" novalidate>
+          <label for="provider-name">Full name</label><input id="provider-name" name="fullName" type="text" placeholder="e.g. Alex Morgan" autocomplete="name" required minlength="2" maxlength="80">
+          <div class="form-row"><div><label for="provider-email">Email address</label><input id="provider-email" name="email" type="email" placeholder="you@example.com" autocomplete="email" required maxlength="254"></div><div><label for="provider-phone">Phone number</label><input id="provider-phone" name="phone" type="tel" placeholder="+1 555 123 4567" autocomplete="tel" required minlength="7" maxlength="20" pattern="[+0-9() .-]{7,20}"></div></div>
+          <div class="form-row"><div><label for="provider-password">Password</label><input id="provider-password" name="password" type="password" placeholder="At least 8 characters" autocomplete="new-password" required minlength="8"></div><div><label for="provider-confirm-password">Confirm password</label><input id="provider-confirm-password" name="confirmPassword" type="password" placeholder="Enter it again" autocomplete="new-password" required minlength="8"></div></div>
+          <div class="form-row"><div><label for="service-category">Service category</label><select id="service-category" name="serviceCategory" required><option value="">Choose a service</option><option>Electrician</option><option>Plumber</option><option>Carpenter</option><option>AC Repair</option><option>Cleaning</option><option>Painting</option></select></div><div><label for="provider-location">Location</label><input id="provider-location" name="location" type="text" placeholder="City or neighborhood" autocomplete="address-level2" required minlength="2" maxlength="100"></div></div>
+          <div class="form-row"><div><label for="experience">Years of experience</label><input id="experience" name="experience" type="number" placeholder="e.g. 5" min="0" max="60" step="1" required></div><div><label for="charges">Service charges</label><input id="charges" name="charges" type="number" placeholder="e.g. 50" min="0" step="0.01" required><span class="input-hint">Starting charge (local currency)</span></div></div>
+          <label for="availability">Availability</label><select id="availability" name="availability" required><option value="">Choose availability</option><option>Available today</option><option>Weekdays, 9am–6pm</option><option>Weekends</option><option>By appointment</option><option>Contact for availability</option></select>
+          <p class="field-hint">Use at least 8 characters for your password.</p>
+          <button class="button auth-submit" type="submit">Create provider account <span>→</span></button>
+        </form>
+        <p class="auth-switch">Already registered as a provider? <a href="provider-login.html">Log in</a></p>
+        <p class="storage-note">Your provider account is protected with a securely hashed password.</p>
+      </div>
+    </section>
+  </main>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script><script src="js/api.js"></script><script src="js/provider-auth.js"></script>
+</body>
+</html>

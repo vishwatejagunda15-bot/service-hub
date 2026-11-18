@@ -1,0 +1,39 @@
+{
+  "name": "servicehub-backend",
+  "version": "1.0.0",
+  "description": "Express and MySQL (Prisma) API for the ServiceHub project",
+  "main": "server.js",
+  "engines": {
+    "node": ">=20.13.0"
+  },
+  "scripts": {
+    "postinstall": "prisma generate",
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "check:db": "node scripts/checkDatabase.js",
+    "db:validate": "prisma validate",
+    "db:generate": "prisma generate",
+    "db:push": "prisma db push",
+    "db:sync": "node scripts/syncDatabase.js",
+    "db:migrate": "prisma migrate deploy",
+    "db:migrate:dev": "prisma migrate dev",
+    "admin:create": "node scripts/createAdmin.js",
+    "test:mysql": "node scripts/testMySQLAuth.js",
+    "test:api": "node scripts/testApiEndpoints.js",
+    "test:backend": "node scripts/testBackendModules.js",
+    "test:frontend": "node scripts/testFrontendIntegration.js",
+    "test:browser": "node scripts/testBrowserPages.js"
+  },
+  "dependencies": {
+    "@prisma/client": "6.19.3",
+    "bcryptjs": "^3.0.3",
+    "cors": "^2.8.6",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "jsonwebtoken": "^9.0.2",
+    "mysql2": "^3.24.6"
+  },
+  "devDependencies": {
+    "prisma": "6.19.3"
+  }
+}

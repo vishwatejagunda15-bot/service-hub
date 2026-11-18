@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#1769e0">
+  <title>Provider dashboard | QuickFix</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/provider-dashboard.css">
+  <link rel="stylesheet" href="css/ui-polish.css">
+</head>
+<body class="provider-dashboard-page">
+  <header class="dashboard-header"><div class="container dashboard-header-inner">
+    <a class="brand" href="index.html" aria-label="QuickFix home"><span class="brand-mark">Q</span><span>quick<span class="brand-blue">fix</span><small>LOCAL HELP, MADE EASY</small></span></a>
+    <nav class="dashboard-nav" aria-label="Provider dashboard navigation"><a class="active" href="provider-dashboard.html#dashboard">Dashboard</a><a href="provider-bookings.html">Booking Requests</a><a href="provider-profile.html">My Profile</a></nav>
+    <button id="provider-logout" class="dashboard-logout" type="button">Logout</button>
+  </div></header>
+  <main class="dashboard-main" id="dashboard">
+    <div id="dashboard-loading" class="loading-state" role="status">Loading your provider dashboard…</div>
+    <div id="dashboard-message" class="form-message" role="status" aria-live="polite" hidden></div>
+    <section class="dashboard-welcome"><div><p class="eyebrow">SERVICE PROVIDER DASHBOARD</p><h1>Welcome back, <span id="provider-name">Provider</span></h1><p>Here’s what’s happening with your QuickFix profile.</p></div><span class="dashboard-badge" aria-hidden="true">✦</span></section>
+
+    <section class="summary-grid" aria-label="Booking summary">
+      <article class="summary-card total-card"><span class="summary-icon">▦</span><span class="summary-label">Total requests</span><strong id="total-bookings">0</strong><small>All time</small></article>
+      <article class="summary-card pending-card"><span class="summary-icon">◷</span><span class="summary-label">Pending</span><strong id="pending-bookings">0</strong><small>Awaiting your response</small></article>
+      <article class="summary-card accepted-card"><span class="summary-icon">✓</span><span class="summary-label">Accepted</span><strong id="accepted-bookings">0</strong><small>Scheduled with customers</small></article>
+      <article class="summary-card completed-card"><span class="summary-icon">★</span><span class="summary-label">Completed</span><strong id="completed-bookings">0</strong><small>Jobs completed</small></article>
+    </section>
+
+    <section class="dashboard-section" id="booking-requests">
+      <div class="dashboard-section-heading"><div><p class="eyebrow">STAY ON TOP OF YOUR WORK</p><h2>Recent booking requests</h2><p>Your latest customer requests are shown here.</p></div><span id="recent-count" class="recent-count"></span></div>
+      <div id="booking-request-list" class="booking-request-list"></div>
+      <div id="no-booking-requests" class="dashboard-empty" hidden><span>▦</span><h3>No booking requests yet</h3><p>New customer requests for your services will appear here.</p></div>
+    </section>
+
+    <section class="dashboard-section profile-section" id="my-profile">
+      <div class="dashboard-section-heading"><div><p class="eyebrow">YOUR PUBLIC DETAILS</p><h2>My profile</h2><p>Profile information shown to QuickFix customers.</p></div></div>
+      <div class="provider-profile-card">
+        <div class="profile-item"><span>Full name</span><strong id="profile-name"></strong></div>
+        <div class="profile-item"><span>Service category</span><strong id="profile-category"></strong></div>
+        <div class="profile-item"><span>Email address</span><strong id="profile-email"></strong></div>
+        <div class="profile-item"><span>Phone number</span><strong id="profile-phone"></strong></div>
+        <div class="profile-item"><span>Location</span><strong id="profile-location"></strong></div>
+        <div class="profile-item"><span>Years of experience</span><strong id="profile-experience"></strong></div>
+        <div class="profile-item"><span>Service charges</span><strong id="profile-charges"></strong></div>
+        <div class="profile-item"><span>Availability</span><strong id="profile-availability"></strong></div>
+      </div>
+    </section>
+    <p class="dashboard-note">Your profile and booking information is loaded from your ServiceHub account.</p>
+  </main>
+  <footer class="listing-footer"><div class="container"><span>© 2025 QuickFix. Made for better days at home.</span><a href="index.html">Back to home</a></div></footer>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script><script src="js/api.js"></script><script src="js/provider-dashboard.js"></script>
+</body>
+</html>

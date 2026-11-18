@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0f1d33">
+  <title>Admin login | QuickFix ServiceHub</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/auth.css">
+  <link rel="stylesheet" href="css/ui-polish.css">
+  <link rel="stylesheet" href="css/admin.css">
+</head>
+<body class="auth-page admin-login-page">
+  <header class="auth-header">
+    <a class="brand" href="index.html" aria-label="QuickFix home">
+      <span class="brand-mark">Q</span>
+      <span>quick<span class="brand-blue">fix</span><small>ADMINISTRATION PORTAL</small></span>
+    </a>
+    <a class="back-home" href="index.html">← Back to home</a>
+  </header>
+
+  <main class="auth-layout login-layout">
+    <aside class="auth-aside admin-auth-aside">
+      <div class="aside-content">
+        <span class="aside-icon" aria-hidden="true">⌘</span>
+        <p class="eyebrow">RESTRICTED ACCESS</p>
+        <h1>Platform<br><span>Control Center.</span></h1>
+        <p>Monitor live bookings, manage customer and provider accounts, and review ServiceHub platform metrics.</p>
+        <div class="aside-note">
+          <span class="aside-check">✓</span>
+          Authorized administrators only. Public registration is disabled.
+        </div>
+      </div>
+      <span class="aside-decoration decoration-one"></span>
+      <span class="aside-decoration decoration-two"></span>
+    </aside>
+
+    <section class="auth-panel" aria-labelledby="admin-form-title">
+      <div class="auth-form-wrap login-form-wrap">
+        <p class="eyebrow">ADMINISTRATOR SIGN IN</p>
+        <h2 id="admin-form-title">Admin console</h2>
+        <p class="auth-subtitle">Sign in with your provisioned administrator credentials.</p>
+        <div class="form-message" id="admin-login-message" role="status" aria-live="polite" hidden></div>
+        <form id="admin-login-form" novalidate>
+          <label for="admin-email">Admin email</label>
+          <input id="admin-email" name="email" type="email" placeholder="admin@servicehub.com" autocomplete="email" required maxlength="254">
+
+          <label for="admin-password">Password</label>
+          <input id="admin-password" name="password" type="password" placeholder="Enter your admin password" autocomplete="current-password" required>
+
+          <button class="button auth-submit" type="submit">Sign in to Admin Portal <span>→</span></button>
+        </form>
+        <p class="storage-note">Admin accounts are provisioned securely on the server via CLI. Customer and provider accounts cannot log in here.</p>
+      </div>
+    </section>
+  </main>
+
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/admin-auth.js"></script>
+</body>
+</html>

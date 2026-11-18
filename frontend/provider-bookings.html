@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#1769e0">
+  <title>Booking requests | QuickFix</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/provider-dashboard.css">
+  <link rel="stylesheet" href="css/provider-bookings.css">
+  <link rel="stylesheet" href="css/ui-polish.css">
+</head>
+<body class="provider-bookings-page">
+  <header class="dashboard-header"><div class="container dashboard-header-inner">
+    <a class="brand" href="index.html" aria-label="QuickFix home"><span class="brand-mark">Q</span><span>quick<span class="brand-blue">fix</span><small>LOCAL HELP, MADE EASY</small></span></a>
+    <nav class="dashboard-nav" aria-label="Provider dashboard navigation"><a href="provider-dashboard.html#dashboard">Dashboard</a><a class="active" href="provider-bookings.html">Booking Requests</a><a href="provider-profile.html">My Profile</a></nav>
+    <button id="provider-logout" class="dashboard-logout" type="button">Logout</button>
+  </div></header>
+  <main class="provider-bookings-main">
+    <section class="requests-heading"><div><p class="eyebrow">YOUR QUICKFIX WORK</p><h1>Booking requests</h1><p>Review customer requests assigned to your provider account.</p></div><a class="back-dashboard" href="provider-dashboard.html">← Dashboard</a></section>
+    <div id="requests-message" class="requests-message" role="status" aria-live="polite" hidden></div>
+    <div id="requests-loading" class="loading-state" role="status">Loading your booking requests…</div>
+    <div class="requests-summary"><span id="requests-count"></span><span>Only requests for your provider profile are shown.</span></div>
+    <section id="requests-list" class="requests-list" aria-label="Customer booking requests"></section>
+    <section id="requests-empty" class="requests-empty" hidden><span>▦</span><h2>No booking requests yet</h2><p>New bookings for your service will appear here.</p><a class="button" href="provider-dashboard.html">Back to dashboard</a></section>
+  </main>
+  <footer class="listing-footer"><div class="container"><span>© 2025 QuickFix. Made for better days at home.</span><a href="index.html">Back to home</a></div></footer>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script><script src="js/api.js"></script><script src="js/provider-bookings.js"></script>
+</body>
+</html>

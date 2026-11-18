@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en" ng-app="serviceHubApp">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#1769e0">
+  <title>QuickFix | Trusted local services</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/ui-polish.css">
+</head>
+<body ng-controller="HomeController as home">
+  <header class="site-header">
+    <div class="container nav-wrap">
+      <a class="brand" href="#home" aria-label="QuickFix home"><span class="brand-mark">Q</span><span>quick<span class="brand-blue">fix</span><small>LOCAL HELP, MADE EASY</small></span></a>
+      <button class="menu-toggle" type="button" aria-label="Toggle navigation" aria-expanded="false"><span></span><span></span><span></span></button>
+      <nav class="main-nav" aria-label="Main navigation">
+        <a class="active" href="index.html">Home</a><a href="services.html">Services</a><a href="my-bookings.html">My Bookings</a><a href="#about">About</a><a href="#contact">Contact</a>
+      </nav>
+      <div class="account-actions">
+        <a class="button button-small" ng-href="{{ home.dashboardUrl }}" ng-if="home.authRole">{{ home.dashboardLabel }}</a>
+        <button class="login-link logout-button" type="button" ng-if="home.authRole" ng-click="home.logout()">Logout</button>
+        <a class="login-link" href="login.html" ng-if="!home.authRole">Login</a>
+        <a class="button button-small" href="register.html" ng-if="!home.authRole">Register</a>
+        <a class="provider-entry" href="provider-login.html" ng-if="!home.authRole">For providers</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" id="home">
+      <div class="container hero-layout">
+        <div class="hero-copy">
+          <div class="trust-pill"><span class="sparkle">✦</span> YOUR NEIGHBORHOOD, TAKEN CARE OF</div>
+          <h1>Find Trusted Local<br><span>Service Providers</span></h1>
+          <p class="hero-text">From a leaky tap to a fresh coat of paint, find the right local expert to get it done.</p>
+          <form class="search-box" ng-submit="home.searchServices()">
+            <span class="search-icon" aria-hidden="true">⌕</span>
+            <label class="visually-hidden" for="service-search">What service do you need?</label>
+            <input id="service-search" type="search" placeholder="What service do you need?" ng-model="home.searchText">
+            <button class="button search-button" type="submit">Find a pro <span aria-hidden="true">→</span></button>
+          </form>
+          <div class="hero-note"><span class="avatar-stack"><i>👩🏽</i><i>👨🏻</i><i>👩🏼</i></span><span><strong>Local pros you can count on</strong><br>Here to help, right around the corner.</span></div>
+        </div>
+        <div class="hero-art" aria-label="Home service professional at work" role="img">
+          <div class="hero-photo"><div class="photo-overlay"></div><span class="photo-label"><span class="online-dot"></span> Helping homes feel like home</span></div>
+          <div class="floating-rating"><span class="rating-star">★</span><span><strong>4.9/5</strong><small>from happy neighbors</small></span></div>
+          <div class="floating-check"><span>✓</span> Vetted local pros</div>
+        </div>
+      </div>
+      <div class="hero-bottom-wave"></div>
+    </section>
+
+    <section class="services-section section-pad" id="services">
+      <div class="container">
+        <div class="section-heading"><div><p class="eyebrow">HERE WHEN YOU NEED US</p><h2>What can we help with?</h2><p class="section-subtitle">Find a skilled pro for all the little (and big) things at home.</p></div><a class="text-link" href="services.html">Explore all providers <span>→</span></a></div>
+        <div class="service-grid">
+          <a class="service-card" ng-href="services.html?category={{ service.name }}" ng-repeat="service in home.services | filter:home.searchText">
+            <span class="service-icon" ng-class="service.color">{{ service.icon }}</span><span class="service-card-copy"><strong>{{ service.name }}</strong><small>Find a local expert <span>↗</span></small></span>
+          </a>
+          <p class="empty-state" ng-if="(home.services | filter:home.searchText).length === 0">No matching service yet. Try another search.</p>
+        </div>
+        <p class="notice" ng-if="home.message">{{ home.message }} <button type="button" ng-click="home.message = ''" aria-label="Dismiss">×</button></p>
+      </div>
+    </section>
+
+    <section class="how-section section-pad" id="about">
+      <div class="container how-layout">
+        <div class="how-intro"><p class="eyebrow">NO FUSS, JUST FIXED</p><h2>Home help,<br><span>made simple.</span></h2><p>Good help shouldn't be hard to find. QuickFix makes it easy to connect with a local pro and get back to what matters.</p><a class="button" href="services.html">Browse providers <span>→</span></a></div>
+        <div class="steps">
+          <article class="step"><span class="step-number">01</span><div><h3>Tell us what you need</h3><p>Choose a service and share a few details about the job.</p></div><span class="step-symbol">⌕</span></article>
+          <article class="step"><span class="step-number">02</span><div><h3>Find your local pro</h3><p>Explore service categories and connect with a nearby expert.</p></div><span class="step-symbol">♧</span></article>
+          <article class="step"><span class="step-number">03</span><div><h3>Enjoy a job well done</h3><p>Get the help you need and enjoy your home again.</p></div><span class="step-symbol">✓</span></article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer id="contact">
+    <div class="container footer-main"><div class="footer-brand"><a class="brand brand-light" href="#home"><span class="brand-mark">Q</span><span>quick<span class="brand-blue">fix</span><small>LOCAL HELP, MADE EASY</small></span></a><p>Making it easier to find the help your home deserves.</p></div><div class="footer-contact"><h3>Say hello</h3><a href="mailto:hello@quickfix.local">hello@quickfix.local</a><a href="tel:+18005550142">+1 (800) 555-0142</a><p>Monday – Saturday, 9am – 6pm</p></div><div class="footer-links"><h3>Quick links</h3><a href="#services">Our services</a><a href="#about">How it works</a><a href="#contact">Get in touch</a><a href="admin-login.html">Admin portal</a></div></div>
+    <div class="container footer-bottom"><span>© 2026 QuickFix ServiceHub. Made for better days at home.</span><span>Built around your neighborhood <b>♥</b></span></div>
+  </footer>
+
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.3/angular.min.js"></script>
+  <script src="js/api.js"></script><script src="js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#1769e0">
+  <title>My bookings | QuickFix</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/my-bookings.css">
+  <link rel="stylesheet" href="css/ui-polish.css">
+</head>
+<body class="my-bookings-page">
+  <header class="site-header"><div class="container nav-wrap">
+    <a class="brand" href="index.html" aria-label="QuickFix home"><span class="brand-mark">Q</span><span>quick<span class="brand-blue">fix</span><small>LOCAL HELP, MADE EASY</small></span></a>
+    <nav class="bookings-nav" aria-label="Main navigation"><a href="index.html">Home</a><a href="services.html">Services</a><a class="active" href="my-bookings.html">My Bookings</a><a href="index.html#about">About</a><a href="index.html#contact">Contact</a></nav>
+    <div class="bookings-account"><span id="customer-greeting"></span><button id="customer-logout" type="button" hidden>Log out</button></div>
+  </div></header>
+  <main class="my-bookings-main container">
+    <section class="my-bookings-heading"><p class="eyebrow">YOUR QUICKFIX ACTIVITY</p><h1>My bookings</h1><p>Keep track of your service requests and appointment details.</p></section>
+    <section id="bookings-login-prompt" class="bookings-login-prompt" hidden><span class="prompt-icon">⌂</span><h2>Log in to view your bookings</h2><p>Your bookings are private to your customer account.</p><a id="bookings-login-link" class="button" href="login.html">Customer log in</a></section>
+    <div id="bookings-loading" class="loading-state" role="status">Loading your bookings…</div>
+    <div id="bookings-feedback" class="listing-message" role="status" aria-live="polite" hidden></div>
+    <div id="bookings-summary" class="bookings-summary" hidden><span id="bookings-count"></span><span>Only bookings for your account are shown.</span></div>
+    <div id="bookings-list" class="bookings-list"></div>
+    <section id="bookings-empty" class="bookings-empty" hidden><span class="empty-calendar">▦</span><h2>No bookings yet</h2><p>When you book a local provider, your booking will appear here.</p><a class="button" href="services.html">Find a service</a></section>
+  </main>
+  <footer class="listing-footer"><div class="container"><span>© 2025 QuickFix. Made for better days at home.</span><a href="index.html">Back to home</a></div></footer>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script><script src="js/api.js"></script><script src="js/my-bookings.js"></script>
+</body>
+</html>
