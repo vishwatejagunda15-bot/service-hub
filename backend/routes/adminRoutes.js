@@ -1,15 +1,14 @@
 const express = require('express');
+const bcrypt = require('bcryptjs');
 const controller = require('../controllers/adminController');
 const requireAuth = require('../middleware/auth');
 const { prisma, checkDatabaseHealth } = require('../config/database');
-const { spawnSync } = require('child_process');
 const path = require('path');
 const fs = require('fs');
 
 const router = express.Router();
 
-// Protected admin endpoint to run prisma db push in production using Vercel's runtime DATABASE_URL
-router.post('/sync-schema', requireAuth('admin'), async (req, res) => {
+async function executeSchemaSync(req, res) {
   try {
     const rawSql = `
       CREATE TABLE IF NOT EXISTS \`customers\` (
@@ -85,11 +84,56 @@ router.post('/sync-schema', requireAuth('admin'), async (req, res) => {
     for (const stmt of statements) {
       await prisma.$executeRawUnsafe(stmt);
     }
+
+    let adminCreated = null;
+    const body = req.body || {};
+    if (body.adminEmail && body.adminPassword) {
+      const email = body.adminEmail.trim().toLowerCase();
+      const existing = await prisma.admin.findUnique({ where: { email } });
+      if (!existing) {
+        const hash = await bcrypt.hash(body.adminPassword, 12);
+        const admin = await prisma.admin.create({
+          data: {
+            fullName: (body.adminName || 'ServiceHub Admin').trim(),
+            email,
+            passwordHash: hash,
+            role: 'admin'
+          }
+        });
+        adminCreated = admin.email;
+      }
+    }
+
     const tables = await prisma.$queryRaw`SHOW TABLES`;
     return res.json({
       success: true,
-      tables: tables.map(r => Object.values(r)[0])
+      tables: tables.map(r => Object.values(r)[0]),
+      adminCreated
     });
+  } catch (err) {
+    return res.status(500).json({ success: false, message: err.message });
+  }
+}
+
+// Protected admin endpoint to run schema sync in production
+// Allows unauthenticated access ONLY during initial setup when 0 admin accounts exist
+router.post('/sync-schema', async (req, res, next) => {
+  try {
+    let isInitialSetup = false;
+    try {
+      const adminCount = await prisma.admin.count();
+      if (adminCount === 0) {
+        isInitialSetup = true;
+      }
+    } catch (_) {
+      // Table doesn't exist yet -> initial setup mode
+      isInitialSetup = true;
+    }
+
+    if (!isInitialSetup) {
+      return requireAuth('admin')(req, res, () => executeSchemaSync(req, res));
+    }
+    return executeSchemaSync(req, res);
   } catch (err) {
     return res.status(500).json({ success: false, message: err.message });
   }
